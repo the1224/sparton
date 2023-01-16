@@ -69,15 +69,16 @@
         function startPoll(){
             let title = $('#title').val()
             let resCount = $('.vote_input').length
-            let resData = new Array(resCount)
+            let resData = new Array(resCount);
 
             for(let i = 0; i < resCount; i++) {
                 resData[i] = $($('.vote_input')[i]).val()
             }
+            let dupleCheck = new Set(resData);
 
-            if (res1==res2) {
+            if (resData.length !== dupleCheck.size)
                 alert('response값이 중복됩니다. 다시 입력해 주세요!')
-            }
+
             else {
                 $.ajax({
                     type: 'POST',
