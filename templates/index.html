@@ -3,8 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script>
+        $(document).ready(function () {
+            show_vote();
+        });
+
+        function show_vote() {
+            $.ajax({
+                type: "GET",
+                url: "/vote_polls",
+                data: {},
+                success: function (response) {
+                    let rows = response['votes']
+                    for (let i = 0; i < rows.length; i++) {
+                        let title = rows[i]['title']
+                        let id = rows[i]['num']
+                        let temp_html = `
+                                            <li>
+                                            <h2>${title}
+                                            <button onClick="location.href='vote-poll?id=${id}'" type="button" class="btn btn-outline-primary">투표하기</button>
+                                            <button onclick="location.href='vote-result?id=${id}'" type="button" class="btn btn-outline-primary">결과보기</button>
+                                            </h2>
+                                            </li>
+                        `
+                        $('#vote-list').append(temp_html)
+                    }
+                }
+            }
+        }
+
+        )
+        ;
+        }
+
+    </script>
 </head>
 <body>
-    <button><a href="/vote-poll">투표장 생성</a></button>
+<button><a href="/vote-poll">투표장 생성</a></button>
+<div class="mybox" id="vote-list">
+    <li>
+        <h2>예시1
+        <button onclick="location.href='vote-poll?id=1'" type="button" class="btn btn-outline-primary">투표하기</button>
+        <button onclick="location.href='vote-result?id=1'" type="button" class="btn btn-outline-primary">결과보기</button>
+        </h2>
+        <h2>예시2
+        <button onclick="location.href='vote-poll?id=2'" type="button" class="btn btn-outline-primary">투표하기</button>
+        <button onclick="location.href='vote-result?id=2'" type="button" class="btn btn-outline-primary">결과보기</button>
+        </h2>
+    </li>
+</div>
 </body>
 </html>
