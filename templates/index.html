@@ -44,7 +44,32 @@
 
     </script>
 </head>
+<style>
+    .mainvote {
+        width: 95%;
+        margin: auto;
+        height: 300px;
+        box-shadow: 0px 0px 2px gray;
+        border-radius: 50px;
+
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .mainvote > button {
+        margin-top: 20px;
+    }
+    .mainvote > button:hover{
+        border: 1px solid white;
+    }
+</style>
 <body>
+<div class="mainvote">
+    <h1>The VOTE</h1>
+    <button onclick="location.href='vote-poll.html'" type="button" class="btn btn-primary">Create Vote</button>
+</div>
 <button><a href="/vote-poll">투표장 생성</a></button>
 <div class="mybox" id="vote-list">
     <li>
