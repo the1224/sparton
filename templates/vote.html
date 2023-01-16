@@ -172,7 +172,7 @@
                 },
                 success: function (response) {
                     if (response === "ok")
-                        location.href = "/";
+                        location.href = "/vote-result?id=" + vote_id;
                     if (response === "error") {
                         alert("투표 도중 오류가 발생하였습니다");
                         location.href = "/";
