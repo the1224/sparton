@@ -17,9 +17,10 @@ def vote_poll():
 def vote():
   return render_template('vote.html', id = request.args.get('id'))
 
+#각 링크별 결과창 생성
 @app.route('/vote-result')
 def vote_result():
-  return render_template('vote-result.html')
+  return render_template('vote-result.html', id = request.args.get('id'))
 
 @app.route('/shared-vote-links')
 def shared_vote_links():
@@ -67,23 +68,34 @@ def vote_delete_api():
 def vote_put_api():
   return vote_put()
 
-if __name__ == '__main__':
-  app.run('0.0.0.0', port=5000, debug=True)
 
-#각 링크별 결과창 생성
-  @app.route('/api/vote-result)', methods=["GET"])
-  def vote_result_link():
-    return render_template('vote-result.html', id=request.args.get('id'))
+@app.route('/api/vote-result', methods=["GET"])
+def get_vote_result():
+  id_give = int(request.args.get('id'))
+  found_vote_result = db.vote_polls.find_one({'id': id_give}, {'_id': False})
+  if found_vote_result is None:
+    return jsonify({'error': True, 'msg': '해당 id를 가진 투표장이 없습니다'})
+
+  doc = {}
+  doc['error'] = False
+  for key, value in found_vote_result.items():
+    if key != 'id' and key != 'msg':
+      doc[key] = value
+  return doc
+
+
+
+@app.route('/api/vote-results', methods=["GET"])
+def get_all_vote_results():
+  all_vote_results = list(db.vote_polls.find({}, {'_id': False}))
+  return all_vote_results
 
 
 # 각 링크별 결과 받아오기
-  @app.route("/api/vote", methods=["GET"])
-  def vote_result_get():
-    vote_result = list(db.vote_polls.find({}, {'_id': False}))
-    return jsonify({'results': vote_result})
+@app.route("/api/vote", methods=["GET"])
+def vote_result_get():
+  vote_result = list(db.vote_polls.find({}, {'_id': False}))
+  return jsonify({'results': vote_result})
 
-  #메인페이지에 투표 제목, 투표 링크, 결과 링크 표시
-  @app.route("/api/vote", methods=["GET"])
-  def vote_main_get():
-    vote_list = list(db.vote_polls.find({}, {'_id': False}))
-    return jsonify({'votes': vote_list})
+if __name__ == '__main__':
+    app.run('0.0.0.0', port=5000, debug=True)
