@@ -67,7 +67,7 @@
             let res2 = $('#res2').val()
             $.ajax({
                 type: 'POST',
-                url: '/vote-poll',
+                url: '/api/vote-poll',
                 data: {title_give:title, res1_give:res1, res2_give:res2},
                 success: function (response) {
                     //alert(response['msg'])
