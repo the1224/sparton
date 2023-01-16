@@ -8,23 +8,23 @@ def index():
   return render_template('index.html')
 
 # 투표 GET API
-@app.route('/vote', methods=["GET"])
+@app.route('/api/vote', methods=["GET"])
 def vote_get_api():
   return vote_get()
 
 # 투표 POST API
-@app.route('/api/category', methods=["POST"])
-def category_post_api():
+@app.route('/api/vote', methods=["POST"])
+def vote_post_api():
   return vote_post()
 
 # 투표 DELETE API
-@app.route('/api/category', methods=["DELETE"])
+@app.route('/api/vote', methods=["DELETE"])
 def vote_delete_api():
   return vote_delete()
 
 # 투표 PUT API
-@app.route('/api/category', methods=["PUT"])
-def category_put_api():
+@app.route('/api/vote', methods=["PUT"])
+def vote_put_api():
   return vote_put()
 
 if __name__ == '__main__':
