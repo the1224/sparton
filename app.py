@@ -7,6 +7,22 @@ app = Flask(__name__)
 def index():
   return render_template('index.html')
 
+@app.route('/vote-poll')
+def vote_poll():
+  return render_template('vote-poll.html')
+
+@app.route('/vote')
+def vote():
+  return render_template('vote.html')
+
+@app.route('/vote-result')
+def vote_result():
+  return render_template('vote-result.html')
+
+@app.route('/shared-vote-links')
+def shared_vote_links():
+  return render_template('shared-vote-links.html')
+
 # 투표 GET API
 @app.route('/api/vote', methods=["GET"])
 def vote_get_api():
