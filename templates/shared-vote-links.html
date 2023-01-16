@@ -67,7 +67,12 @@
     </style>
     <script>
         $(document).ready(function () {
-            let res1 = $('#vote_link').val()
+            vote_link = 'http://localhost:5000/vote/' + String({{ id }})
+            vote_result_link = 'http://localhost:5000/vote-result?id=' + String({{ id }})
+            $('#vote_link').text(vote_link)
+            $('#vote_link').attr('href', vote_link)
+            $('#vote_result_link').text(vote_result_link)
+            $('#vote_result_link').attr('href', vote_result_link)
         });
 {##}
 {#        function set_temp() {#}
@@ -111,8 +116,15 @@
     </script>
 </head>
 <body>
-vote-link : <h1 id="vote_link"></h1>
-vote-result-link : <h1 id="vote_result_link"></h1>
+<div>
+    링크를 공유해 같이 투표해보고 결과를 확인하세요.
+</div>
+<div>
+    vote-link : <a id="vote_link"></a>
+</div>
+<div>
+    vote-result-link : <a id="vote_result_link"></a>
+</div>
 {#<h1>shared-vote-links page</h1>#}
 {#<div class="mypic">#}
 {#    <h1>개발자 소통게시판 회원가입</h1>#}
