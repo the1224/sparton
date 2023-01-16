@@ -73,7 +73,7 @@
             .form-check{
                 border: 1px solid black;
                 border-radius: 20px;
-                margin: 10px;
+                margin: 5px;
                 padding: 5px;
             }
             .form-check > .form-check-input{
@@ -83,6 +83,9 @@
             .btn-primary {
                 width: 100%;
                 border-radius: 20px;
+            }
+            .form-check-label{
+                width: 100%;
             }
         </style>
         <script>
@@ -131,13 +134,13 @@
                         {
                             if(keys[i] != "title") {
                                 tmp_html += `
-                                    <p class="form-check">
-                                      <input class="form-check-input" type="radio" name="vote_radio" id="flexRadioDefault1" value="${keys[i]}">
-                                      <label class="form-check-label" for="flexRadioDefault1">
-                                       ${keys[i]}
-                                      </label>
-                                    </p>
-                                    `
+                                            <label class="form-check-label" for="flexRadioDefault${i}">
+                                                <p class="form-check">
+                                                    <input class="form-check-input" type="radio" name="vote_radio" id="flexRadioDefault${i}" value="${keys[i]}">
+                                                    ${keys[i]}
+                                                </p>
+                                            </label>
+                                            `
                             }
                         }
                         tmp_html += `<button type="button" class="btn btn-primary" onclick="post_vote()">투표!</button>`
