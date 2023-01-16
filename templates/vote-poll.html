@@ -65,15 +65,21 @@
             let title = $('#title').val()
             let res1 = $('#res1').val()
             let res2 = $('#res2').val()
-            $.ajax({
+            if (res1==res2) {
+                alert('response값이 중복됩니다. 다시 입력해 주세요!')
+            }
+            else {
+                $.ajax({
                 type: 'POST',
                 url: '/api/vote-poll',
                 data: {title_give:title, res1_give:res1, res2_give:res2},
                 success: function (response) {
-                    //alert(response['msg'])
+                    alert('투표 생성 완료!')
                     window.location.reload()
                 }
             });
+            }
+
         }
     </script>
 
