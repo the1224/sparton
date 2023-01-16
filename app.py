@@ -13,9 +13,9 @@ def index():
 def vote_poll():
   return render_template('vote-poll.html')
 
-@app.route('/vote/<id>')
-def vote(id):
-  return render_template('vote.html', id = id)
+@app.route('/vote')
+def vote():
+  return render_template('vote.html', id = request.args.get('id'))
 
 @app.route('/vote-result')
 def vote_result():
