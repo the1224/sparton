@@ -1,11 +1,43 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, request, jsonify
 from vote import *
 
 app = Flask(__name__)
 
+from db import *
+
 @app.route('/')
 def index():
   return render_template('index.html')
+
+@app.route('/vote-poll')
+def vote_poll():
+  return render_template('vote-poll.html')
+
+@app.route('/vote')
+def vote():
+  return render_template('vote.html')
+
+@app.route('/vote-result')
+def vote_result():
+  return render_template('vote-result.html')
+
+@app.route('/shared-vote-links')
+def shared_vote_links():
+  return render_template('shared-vote-links.html')
+
+@app.route('/api/vote-poll', methods=["POST"])
+def create_vote_poll():
+  doc = {}
+  for key, value in request.form.items():
+    if key != "title":
+      doc[value] = 0
+    else:
+      doc[key] = 0
+  new_id = len(list(db.vote_polls.find({}, {'_id': False})))
+  doc['id'] = new_id
+  db.vote_polls.insert_one(doc)
+
+  return jsonify({'error': False})
 
 # 투표 GET API
 @app.route('/api/vote', methods=["GET"])
