@@ -1,139 +1,148 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <meta property="og:title" content="개발자 소통 게시판 회원가입"/>
-        <meta property="og:description" content="같이 소통하는 공간입니다. "/>
-        <meta property="og:image" content="https://cdn.pixabay.com/photo/2015/01/08/18/27/startup-593341_960_720.jpg"/>
+    <meta property="og:title" content="개발자 소통 게시판 회원가입"/>
+    <meta property="og:description" content="같이 소통하는 공간입니다. "/>
+    <meta property="og:image" content="https://cdn.pixabay.com/photo/2015/01/08/18/27/startup-593341_960_720.jpg"/>
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-                crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
 
-        <title>개발자 소통게시판 및 채팅방 회원가입</title>
+    <title>개발자 소통게시판 및 채팅방 회원가입</title>
 
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
-              rel="stylesheet">
-        <style>
-            * {
-                font-family: 'Noto Serif KR', serif;
-            }
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+          rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Ubuntu', sans-serif;
+        }
 
-            .mypic {
-                width: 100%;
-                height: 300px;
+        .mypic {
+            width: 100%;
+            height: 300px;
 
-                background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://cdn.pixabay.com/photo/2015/01/08/18/27/startup-593341_960_720.jpg');
-                background-position: center 30%;
-                background-size: cover;
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://cdn.pixabay.com/photo/2015/01/08/18/27/startup-593341_960_720.jpg');
+            background-position: center 30%;
+            background-size: cover;
 
-                color: white;
+            color: white;
 
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            }
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-            .mypost {
-                width: 95%;
-                max-width: 500px;
-                margin: 20px auto 20px auto;
+        .mypost {
+            width: 95%;
+            max-width: 500px;
+            margin: 20px auto 20px auto;
 
-                box-shadow: 0px 0px 3px 0px black;
-                padding: 20px;
-            }
+            box-shadow: 0px 0px 3px 0px black;
+            padding: 20px;
+        }
 
-            .mypost > button {
-                margin-top: 15px;
-            }
+        .mypost > button {
+            margin-top: 15px;
+        }
 
-            .mycards {
-                width: 95%;
-                max-width: 500px;
-                margin: auto;
-            }
+        .mycards {
+            width: 95%;
+            max-width: 500px;
+            margin: auto;
+        }
 
-            .mycards > .card {
-                margin-top: 10px;
-                margin-bottom: 10px;
-            }
-            .form-check{
-                border: 1px solid black;
-                border-radius: 20px;
-                margin: 10px;
-                padding: 5px;
-            }
-            .form-check{
-                border: 1px solid black;
-                border-radius: 20px;
-                margin: 5px;
-                padding: 5px;
-            }
-            .form-check > .form-check-input{
-                margin: 5px;
-                !important;
-            }
-            .btn-primary {
-                width: 100%;
-                border-radius: 20px;
-            }
-            .form-check-label{
-                width: 100%;
-            }
-        </style>
-        <script>
-            $(document).ready(function () {
-                set_temp()
-                get_vote_data()
-            });
+        .mycards > .card {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
 
-            function set_temp() {
-                $.ajax({
-                    type: "GET",
-                    url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
-                    data: {},
-                    success: function (response) {
-                        $('#temp').text(response['data'])
+        .form-check {
+            border: 1px solid black;
+            border-radius: 20px;
+            margin: 10px;
+            padding: 5px;
+        }
+
+        .form-check {
+            border: 1px solid black;
+            border-radius: 20px;
+            margin: 5px;
+            padding: 5px;
+        }
+
+        .form-check > .form-check-input {
+            margin: 5px;
+        !important;
+        }
+
+        .btn-primary {
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        .form-check-label {
+            width: 100%;
+        }
+
+        .mycopy {
+            display: flex;
+            align-items: center;
+        }
+
+        .mycopy > * {
+            margin: 0 auto;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            set_temp()
+            get_vote_data()
+        });
+
+        function set_temp() {
+            $.ajax({
+                type: "GET",
+                url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
+                data: {},
+                success: function (response) {
+                    $('#temp').text(response['data'])
+                }
+            })
+        }
+
+        function get_vote_data() {
+            let idGive = {{ id }};
+
+            $.ajax({
+                type: "GET",
+                url: '/api/vote',
+                data: {'idGive': idGive},
+                success: function (response) {
+                    let keys = Object.keys(response["vote_data"][0]);
+                    let data = response["vote_data"][0]
+                    let tmp_html = "";
+                    let total_votes = 0;
+
+
+                    for (i = 0; i < keys.length; i++) {
+                        if (keys[i] != "title")
+                            total_votes += data[keys[i]];
                     }
-                })
-            }
-
-            function get_vote_data() {
-                let idGive = {{ id }};
-
-                $.ajax({
-                    type: "GET",
-                    url: '/api/vote',
-                    data: {'idGive': idGive},
-                    success: function (response) {
-                        let keys = Object.keys(response["vote_data"][0]);
-                        let data = response["vote_data"][0]
-                        let tmp_html ="";
-                        let total_votes = 0;
 
 
-
-                        for(i = 0 ; i < keys.length ; i++)
-                        {
-                            if(keys[i] != "title")
-                                total_votes += data[keys[i]];
-                        }
-
-
-
-
-                        tmp_html =`<h1>${data.title}</h1>`
-                        for(i = 0 ; i < keys.length ; i++)
-                        {
-                            if(keys[i] != "title") {
-                                tmp_html += `
+                    tmp_html = `<h1>${data.title}</h1>`
+                    for (i = 0; i < keys.length; i++) {
+                        if (keys[i] != "title") {
+                            tmp_html += `
                                             <label class="form-check-label" for="flexRadioDefault${i}">
                                                 <p class="form-check">
                                                     <input class="form-check-input" type="radio" name="vote_radio" id="flexRadioDefault${i}" value="${keys[i]}">
@@ -141,47 +150,64 @@
                                                 </p>
                                             </label>
                                             `
-                            }
-                        }
-                        tmp_html += `<button type="button" class="btn btn-primary" onclick="post_vote()">투표!</button>`
-                        $('.mypost').empty();
-                        $('.mypost').append(tmp_html);
-                    }
-                });
-            }
-
-            function post_vote(){
-                let vote_radio_value = $('input:radio[name=vote_radio]:checked').val();
-                let vote_id = {{ id }};
-                $.ajax({
-                    type: 'PUT',
-                    url: '/api/vote',
-                    data: {vote_select_name : vote_radio_value,
-                           vote_id : vote_id
-                    },
-                    success: function (response) {
-                        if(response === "ok")
-                            location.href = "/";
-                        if(response === "error")
-                        {
-                            alert("투표 도중 오류가 발생하였습니다");
-                            location.href = "/";
                         }
                     }
-                });
-            }
+                    tmp_html += `<button type="button" class="btn btn-primary" onclick="post_vote()">투표!</button>`
+                    $('.mypost').empty();
+                    $('.mypost').append(tmp_html);
+                }
+            });
+        }
+
+        function post_vote() {
+            let vote_radio_value = $('input:radio[name=vote_radio]:checked').val();
+            let vote_id = {{ id }};
+            $.ajax({
+                type: 'PUT',
+                url: '/api/vote',
+                data: {
+                    vote_select_name: vote_radio_value,
+                    vote_id: vote_id
+                },
+                success: function (response) {
+                    if (response === "ok")
+                        location.href = "/";
+                    if (response === "error") {
+                        alert("투표 도중 오류가 발생하였습니다");
+                        location.href = "/";
+                    }
+                }
+            });
+        }
 
 
-        </script>
-    </head>
-    <body>
-        <h1>vote page</h1>
-        <div class="mypic">
-            <h1>투표</h1>
-            <p>현재기온: <span id="temp">36</span>도</p>
-        </div>
-        <div class="mypost">
+    </script>
+</head>
+<body>
+<h1>vote page</h1>
+<div class="mypic">
+    <h1>투표</h1>
+    <p>현재기온: <span id="temp">36</span>도</p>
+</div>
+<div class="mypost">
 
-        </div>
-    </body>
+</div>
+<div class="mycopy">
+    <span class="button gray medium" style="font-size: 20px"><a href="#" onclick="clip(); return false;">투표 링크 복사하기!</a></span>
+    <script type="text/javascript">
+        function clip() {
+
+            var url = '';
+            var textarea = document.createElement("textarea");
+            document.body.appendChild(textarea);
+            url = window.document.location.href;
+            textarea.value = url;
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+            alert("URL이 복사되었습니다.")
+        }
+    </script>
+</div>
+</body>
 </html>
