@@ -22,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
           rel="stylesheet">
     <style>
-       * {
+        * {
             font-family: 'Noto Serif KR', serif;
         }
 
@@ -49,29 +49,35 @@
             box-shadow: 0px 0px 3px 0px black;
             padding: 20px;
         }
-        .list-group{
+
+        .list-group {
             width: 100%;
         }
-        .badge{
+
+        .badge {
             float: right;
         }
+
         {#.voteresult {#}
         {#    width: 800px;#}
         {#    heith: 300px;#}
         {#    margin: 50px auto 0px;#}
         {#    text-align: left;#}
-        {#}#}
+        {
+        #}#}
         {##}
         {#.votelist {#}
         {#    display: flex;#}
         {#    flex-direction: row;#}
         {#    align-items: center;#}
         {#    justify-content: left;#}
-        {#}#}
+        {
+        #}#}
 
         {#.votelist > p {#}
         {#    margin-right: 60px;#}
-        {#}#}
+        {
+        #}#}
     </style>
     <script>
 
@@ -79,6 +85,21 @@
             vote_result(); // 페이지가 로드되면 바로 투표 결과가 나와야 하므로 로드됨과 동시에 함수 호출
         });
 
+        function sort_selections_by_popularity(data) {
+            let selection_and_count = []
+            for (let [key, value] of Object.entries(data)) {
+                console.log(key, value)
+                if (key != 'title' && key != 'error') {
+                    selection_and_count.push([key, value])
+                }
+            }
+            selection_and_count.sort(
+                (first, second) => {
+                    return second[1] - first[1]
+                }
+            )
+            return selection_and_count
+        }
 
         //투표 결과를 html에 띄워주는 함수
         function vote_result() {
@@ -92,35 +113,32 @@
                         alert(response['msg'])
                         return
                     }
-                    for(let [key, value] of Object.entries(response)){
-                      if (key != 'title' && key != 'error')
-                            total_votes += parseInt(value);
+
+                    selections_by_popularity = sort_selections_by_popularity(response['data'])
+                    $('#title').text(response['data']['title'])
+                    for (let [selection, popularity] of selections_by_popularity) {
+                        if (selection != 'title' && selection != 'error')
+                            total_votes += parseInt(popularity);
                     }
-                    for (let [key, value] of Object.entries(response)) {
-                        let percent = value / total_votes * 100
+
+                    for (let [selection, popularity] of selections_by_popularity) {
+                        let percent = total_votes >= 1 ? popularity / total_votes * 100 : 0
                         percent = percent.toFixed(2)
                         let temp_html = ""
-                        if (key == 'title') {
-                            $('#title').text(value)
-                        }
-                        else if (key != 'error') {
-                            if(percent == 0)
-                            {
-                                 temp_html = `
-                                                <li class="list-group-item">${key}
-                                                    <span class="badge bg-primary rounded-pill">${percent}% (${value})</span>
-                                                </li>
-                                                `
-                            }
-                            else {
-                                 temp_html = `
-                                            <li class="list-group-item" style="background: linear-gradient(to right, lightgrey ${percent}%, white 0%);">${key}
-                                                <span class="badge bg-primary rounded-pill">${percent}% (${value})</span>
+                        if (percent == 0) {
+                            temp_html = `
+                                            <li class="list-group-item">${selection}
+                                                <span class="badge bg-primary rounded-pill">${percent}% (${popularity})</span>
                                             </li>
                                             `
-                            }
-                            $('#result-votes').append(temp_html)
+                        } else {
+                            temp_html = `
+                                        <li class="list-group-item" style="background: linear-gradient(to right, lightgrey ${percent}%, white 0%);">${selection}
+                                            <span class="badge bg-primary rounded-pill">${percent}% (${popularity})</span>
+                                        </li>
+                                        `
                         }
+                        $('#result-votes').append(temp_html)
                     }
                 }
             });
@@ -132,8 +150,8 @@
 <div class="mypost" id="result-box">
     <h1 id="title"></h1>
     <div class="card" style="">
-      <ul class="list-group list-group-flush" id="result-votes">
-      </ul>
+        <ul class="list-group list-group-flush" id="result-votes">
+        </ul>
     </div>
 </div>
 </body>
