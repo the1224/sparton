@@ -29,10 +29,10 @@
                         let id = rows[i]['num']
                         let temp_html = `
                                             <li>
-                                            <h2>${title}
-                                            <button onClick="location.href='vote-poll?id=${id}'" type="button" class="btn btn-outline-primary">투표하기</button>
-                                            <button onclick="location.href='vote-result?id=${id}'" type="button" class="btn btn-outline-primary">결과보기</button>
-                                            </h2>
+                                                <h2>${title}
+                                                    <button onClick="location.href='vote-poll?id=${id}'" type="button" class="btn btn-outline-primary">투표하기</button>
+                                                    <button onclick="location.href='vote-result?id=${id}'" type="button" class="btn btn-outline-primary">결과보기</button>
+                                                </h2>
                                             </li>
                         `
                         $('#vote-list').append(temp_html)
@@ -44,33 +44,8 @@
 
     </script>
 </head>
-<style>
-    .mainvote {
-        width: 95%;
-        margin: auto;
-        height: 300px;
-        box-shadow: 0px 0px 2px gray;
-        border-radius: 50px;
-
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .mainvote > button {
-        margin-top: 20px;
-    }
-    .mainvote > button:hover{
-        border: 1px solid white;
-    }
-</style>
 <body>
-<div class="mainvote">
-    <h1>The VOTE</h1>
-    <button onclick="location.href='vote-poll.html'" type="button" class="btn btn-primary">Create Vote</button>
-</div>
-<button><a href="/vote-poll">투표장 생성</a></button>
+<header>{% include 'header.html' %}</header>
 <div class="mybox" id="vote-list">
     <li>
         <h2>예시1
