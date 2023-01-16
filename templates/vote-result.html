@@ -22,9 +22,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
           rel="stylesheet">
     <style>
+        #result-box {
+            width: 50%;
+            margin: 10px auto 10px;
+            box-shadow: 0px 0px 2px gray;
+            border-radius: 10px;
+        }
         .mypost {
             width: 95%;
-            max-width: 500px;
             margin: 20px auto 20px auto;
             box-shadow: 0px 0px 3px 0px black;
             padding: 20px;
@@ -35,6 +40,7 @@
         }
 
         .mybutton {
+            margin-top: 15px;
             display: flex;
             align-items: center;
             flex-direction: column;
@@ -118,9 +124,9 @@
         <ul class="list-group list-group-flush" id="result-votes">
         </ul>
     </div>
-</div>
-<div class="mybutton">
-    <button onclick="location.href='/'" type="button" class="btn btn-outline-primary" >home</button>
+    <div class="mybutton">
+        <button onclick="location.href='/'" type="button" class="btn btn-outline-primary" >home</button>
+    </div>
 </div>
 
 </body>
