@@ -53,7 +53,6 @@ def vote_now_num(id, vote_name):
 def duple_check(id):
     ip = request.remote_addr
     encoding_ip = sha256_encode(ip)
-    print(encoding_ip)
     log_data = list(db.vote_log.find({'ip':str(encoding_ip),'vote_num':int(id)}, {'_id': False}))
     if(log_data != []):
         return True
