@@ -3,7 +3,6 @@ from db import db
 
 def vote_get(id):
     vote_id = int(id)
-    print(vote_id)
     vote_list = list(db.vote_polls.find({'id': vote_id}, {'_id': False, 'id':False}))
     return jsonify({'vote_data': vote_list})
 
