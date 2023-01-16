@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, jsonify
 from vote import *
 
 app = Flask(__name__)
@@ -15,7 +15,7 @@ def vote_poll():
 
 @app.route('/vote')
 def vote():
-  return render_template('vote.html')
+  return render_template('vote.html', id = request.args.get('id'))
 
 @app.route('/vote-result')
 def vote_result():
@@ -23,36 +23,37 @@ def vote_result():
 
 @app.route('/shared-vote-links')
 def shared_vote_links():
-  return render_template('shared-vote-links.html')
+  return render_template('shared-vote-links.html', id = request.args.get('id'))
 
 @app.route('/api/vote-poll', methods=["POST"])
 def create_vote_poll():
   doc = {}
   for key, value in request.form.items():
-    if key != "title":
-      doc[value] = 0
+    if key == "title_give":
+      doc['title'] = value
     else:
-      doc[key] = 0
+      doc[value] = 0
   new_id = len(list(db.vote_polls.find({}, {'_id': False})))
   doc['id'] = new_id
   db.vote_polls.insert_one(doc)
 
-  return jsonify({'error': False})
+  return jsonify({'error': False, 'id': new_id})
 
 # 투표 GET API
 @app.route('/api/vote', methods=["GET"])
-def vote_get_api():
-  return vote_get()
+def vote_get_data():
+  id = request.args.get('idGive', "0")
+  return vote_get(id)
 
 # 투표 POST API
 @app.route('/api/vote', methods=["POST"])
 def vote_post_api():
-  return vote_post()
+  return "post"
 
 # 투표 DELETE API
 @app.route('/api/vote', methods=["DELETE"])
 def vote_delete_api():
-  return vote_delete()
+  return "delete"
 
 # 투표 PUT API
 @app.route('/api/vote', methods=["PUT"])

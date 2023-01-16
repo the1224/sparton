@@ -65,15 +65,25 @@
             let title = $('#title').val()
             let res1 = $('#res1').val()
             let res2 = $('#res2').val()
-            $.ajax({
+            if (res1==res2) {
+                alert('response값이 중복됩니다. 다시 입력해 주세요!')
+            }
+            else {
+                $.ajax({
                 type: 'POST',
                 url: '/api/vote-poll',
                 data: {title_give:title, res1_give:res1, res2_give:res2},
                 success: function (response) {
-                    //alert(response['msg'])
-                    window.location.reload()
+                    alert('투표 생성 완료!')
+
+                    {# 투표 생성 완료시, 다른 사람들도 링크로 참여할 수 있는 공유 링크가 있는 페이지로 redirect#}
+                    {# GET parameter로 id 값을 넘겨줌 #}
+                    window.location = '/shared-vote-links?' + 'id' + '=' + response['id']
+                    return false;
                 }
             });
+            }
+
         }
     </script>
 
