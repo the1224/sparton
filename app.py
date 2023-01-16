@@ -1,7 +1,11 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, request, jsonify
+from pymongo import MongoClient
 from vote import *
 
 app = Flask(__name__)
+
+client = MongoClient("mongodb+srv://<username>:<password>@cluster0.y2oldeo.mongodb.net/?retryWrites=true&w=majority")
+db = client.test
 
 @app.route('/')
 def index():
