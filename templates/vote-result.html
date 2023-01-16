@@ -46,11 +46,15 @@
             width: 95%;
             max-width: 500px;
             margin: 20px auto 20px auto;
-
             box-shadow: 0px 0px 3px 0px black;
             padding: 20px;
         }
-
+        .list-group{
+            width: 100%;
+        }
+        .badge{
+            float: right;
+        }
         {#.voteresult {#}
         {#    width: 800px;#}
         {#    heith: 300px;#}
@@ -78,6 +82,7 @@
 
         //투표 결과를 html에 띄워주는 함수
         function vote_result() {
+            let total_votes = 0;
             $.ajax({
                 type: "GET",
                 url: "/api/vote-result?id=" + String({{ id }}),
@@ -87,16 +92,34 @@
                         alert(response['msg'])
                         return
                     }
-
+                    for(let [key, value] of Object.entries(response)){
+                      if (key != 'title' && key != 'error')
+                            total_votes += parseInt(value);
+                    }
                     for (let [key, value] of Object.entries(response)) {
+                        let percent = value / total_votes * 100
+                        percent = percent.toFixed(2)
+                        let temp_html = ""
                         if (key == 'title') {
-                            $('#title').text('Title: ' + value)
+                            $('#title').text(value)
                         }
                         else if (key != 'error') {
-                            let temp_html = `<div>
-                                                ${key}: ${value}
-                                            </div>`
-                            $('#result-box').append(temp_html)
+                            if(percent == 0)
+                            {
+                                 temp_html = `
+                                                <li class="list-group-item">${key}
+                                                    <span class="badge bg-primary rounded-pill">${percent}% (${value})</span>
+                                                </li>
+                                                `
+                            }
+                            else {
+                                 temp_html = `
+                                            <li class="list-group-item" style="background: linear-gradient(to right, lightgrey ${percent}%, white 0%);">${key}
+                                                <span class="badge bg-primary rounded-pill">${percent}% (${value})</span>
+                                            </li>
+                                            `
+                            }
+                            $('#result-votes').append(temp_html)
                         }
                     }
                 }
@@ -107,7 +130,11 @@
 <body>
 <div class="mypic"></div>
 <div class="mypost" id="result-box">
-    <div id="title"></div>
+    <h1 id="title"></h1>
+    <div class="card" style="">
+      <ul class="list-group list-group-flush" id="result-votes">
+      </ul>
+    </div>
 </div>
 </body>
 
