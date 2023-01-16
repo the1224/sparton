@@ -1,7 +1,9 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify
 from vote import *
 
 app = Flask(__name__)
+
+from db import *
 
 @app.route('/')
 def index():
@@ -22,6 +24,20 @@ def vote_result():
 @app.route('/shared-vote-links')
 def shared_vote_links():
   return render_template('shared-vote-links.html')
+
+@app.route('/api/vote-poll', methods=["POST"])
+def create_vote_poll():
+  doc = {}
+  for key, value in request.form.items():
+    if key != "title_give":
+      doc[value] = 0
+    else:
+      doc[key] = value
+  new_id = len(list(db.vote_polls.find({}, {'_id': False})))
+  doc['id'] = new_id
+  db.vote_polls.insert_one(doc)
+
+  return jsonify({'error': False})
 
 # 투표 GET API
 @app.route('/api/vote', methods=["GET"])
