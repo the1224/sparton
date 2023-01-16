@@ -30,12 +30,12 @@
                         let id = rows[i]['id']
                         let temp_html = `
                                             <li>
-                                                <h2>${title}
+                                                <h4>${title}
                                                     <div class="mybutton">
                                                     <button onClick="location.href='vote?id=${id}'" type="button" class="btn btn-outline-primary">투표하기</button>
-                                                    <button onclick="location.href='vote-result?id=${id}'" type="button" class="btn btn-outline-primary">결과보기</button>
+                                                    <button onclick="location.href='vote-result?id=${id}'" type="button" class="btn btn-outline-success">결과보기</button>
                                                 </div>
-                                                </h2>
+                                                </h4>
                                             </li>
                         `
                         $('#vote-list').append(temp_html)
@@ -51,15 +51,18 @@
         }
         .mybox{
             width: 30%;
-            margin: auto;
+            margin: 30px auto;
         }
         .mybutton{
             display: inline-block;
             margin: 0 5px;
             float: right;
-
-
         }
+        li {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
 
     </style>
 </head>
