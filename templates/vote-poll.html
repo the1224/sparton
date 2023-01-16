@@ -61,11 +61,21 @@
 
             for(let i = 0; i < resCount; i++) {
                 resData[i] = $($('.vote_input')[i]).val()
+                if(resData[i] === "" || resData[i] == null){
+                    alert('리스트에 null값은 넣을 수 없습니다. 다시 입력해 주세요!')
+                    return;
+                }
             }
             let dupleCheck = new Set(resData);
 
-            if (resData.length !== dupleCheck.size)
+            if(title === "") {
+                alert('타이틀에 null값은 넣을 수 없습니다. 다시 입력해 주세요!')
+                return;
+            }
+            if (resData.length !== dupleCheck.size) {
                 alert('response값이 중복됩니다. 다시 입력해 주세요!')
+                return;
+            }
 
             else {
                 $.ajax({
