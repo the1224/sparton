@@ -44,12 +44,17 @@
             border: 1px black;
         }
         .mybutton {
-            float: right;
             margin-left: 10px;
+            margin-bottom: 10px;
             display: block;
         }
         button {
             margin-left: 10px;
+        }
+        .buttonclass{
+            display: flex;
+            align-items: end;
+            flex-direction: column;
         }
 
     </style>
@@ -108,7 +113,8 @@
                 <input id="res2" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
             </div>
         </div>
-        <div class="mybutton">
+        <div class="buttonclass">
+            <div class="mybutton">
             <button onclick="addResponse()" type="button" class="btn btn-outline-primary" style="float: right;">
                 Add
             </button>
@@ -117,6 +123,8 @@
             <button type="button" class="btn btn-light">Cancle</button>
             <button onclick="startPoll()" type="button" class="btn btn-primary">Start Poll</button>
         </div>
+        </div>
+
     </div>
 </div>
 </body>
