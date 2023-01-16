@@ -84,7 +84,7 @@
         !important;
         }
 
-        .btn-primary {
+        #post_vote_btn {
             width: 100%;
             border-radius: 20px;
         }
@@ -120,7 +120,8 @@
         }
 
         function get_vote_data() {
-            let idGive = {{ id }};
+            let idGive = {{id}}
+            ;
 
             $.ajax({
                 type: "GET",
@@ -152,7 +153,7 @@
                                             `
                         }
                     }
-                    tmp_html += `<button type="button" class="btn btn-primary" onclick="post_vote()">투표!</button>`
+                    tmp_html += `<button type="button" id="post_vote_btn" class="btn btn-primary" onclick="post_vote()">투표!</button>`
                     $('.mypost').empty();
                     $('.mypost').append(tmp_html);
                 }
@@ -161,7 +162,7 @@
 
         function post_vote() {
             let vote_radio_value = $('input:radio[name=vote_radio]:checked').val();
-            let vote_id = {{ id }};
+            let vote_id = {{id}};
             $.ajax({
                 type: 'PUT',
                 url: '/api/vote',
@@ -184,7 +185,6 @@
     </script>
 </head>
 <body>
-<h1>vote page</h1>
 <header>{% include 'header.html' %}</header>
 <div class="mypost">
 
