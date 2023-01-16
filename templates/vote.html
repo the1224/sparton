@@ -64,8 +64,25 @@
                 margin-top: 10px;
                 margin-bottom: 10px;
             }
-
-            .form-check {
+            .form-check{
+                border: 1px solid black;
+                border-radius: 20px;
+                margin: 10px;
+                padding: 5px;
+            }
+            .form-check{
+                border: 1px solid black;
+                border-radius: 20px;
+                margin: 10px;
+                padding: 5px;
+            }
+            .form-check > .form-check-input{
+                margin: 5px;
+                !important;
+            }
+            .btn-primary {
+                width: 100%;
+                border-radius: 20px;
             }
         </style>
         <script>
@@ -114,12 +131,12 @@
                         {
                             if(keys[i] != "title") {
                                 tmp_html += `
-                                    <div class="form-check">
+                                    <p class="form-check">
                                       <input class="form-check-input" type="radio" name="vote_radio" id="flexRadioDefault1" value="${keys[i]}">
                                       <label class="form-check-label" for="flexRadioDefault1">
                                        ${keys[i]}
                                       </label>
-                                    </div>
+                                    </p>
                                     `
                             }
                         }
@@ -150,6 +167,7 @@
                     }
                 });
             }
+
 
         </script>
     </head>
