@@ -48,12 +48,12 @@ def vote_get_data():
 # 투표 POST API
 @app.route('/api/vote', methods=["POST"])
 def vote_post_api():
-  return vote_post()
+  return "post"
 
 # 투표 DELETE API
 @app.route('/api/vote', methods=["DELETE"])
 def vote_delete_api():
-  return vote_delete()
+  return "delete"
 
 # 투표 PUT API
 @app.route('/api/vote', methods=["PUT"])

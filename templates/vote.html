@@ -67,9 +67,7 @@
 
             .form-check {
                 border: 1px solid black;
-            }
-            .form-check-input{
-                display: block;
+                border-radius: 30px;
             }
         </style>
         <script>
@@ -122,7 +120,6 @@
                                       <input class="form-check-input" type="radio" name="vote_radio" id="flexRadioDefault1" value="${keys[i]}">
                                       <label class="form-check-label" for="flexRadioDefault1">
                                        ${keys[i]}
-                                        <span class="badge bg-primary rounded-pill">${data[keys[i]]}</span>
                                       </label>
                                     </div>
                                     `
@@ -139,18 +136,18 @@
                 let vote_radio_value = $('input:radio[name=vote_radio]:checked').val();
                 let vote_id = {{ id }};
                 $.ajax({
-                    type: 'POST',
+                    type: 'PUT',
                     url: '/api/vote',
                     data: {vote_select_name : vote_radio_value,
                            vote_id : vote_id
                     },
                     success: function (response) {
                         if(response === "ok")
-                            location.reload();
+                            location.href = "/";
                         if(response === "error")
                         {
                             alert("투표 도중 오류가 발생하였습니다");
-                            location.reload();
+                            location.href = "/";
                         }
                     }
                 });
