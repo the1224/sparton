@@ -98,6 +98,7 @@
                     }
                     for (let [key, value] of Object.entries(response)) {
                         let percent = value / total_votes * 100
+                        let percent = total_votes >= 1 ? value / total_votes * 100 : 0
                         percent = percent.toFixed(2)
                         let temp_html = ""
                         if (key == 'title') {
