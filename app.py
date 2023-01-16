@@ -62,3 +62,15 @@ def vote_put_api():
 
 if __name__ == '__main__':
   app.run('0.0.0.0', port=5000, debug=True)
+
+#각 링크별 결과창 생성
+  @app.route('/api/vote-result)', methods=["GET"])
+  def vote_result_link():
+    return render_template('vote-result.html', id=request.args.get('id'))
+
+
+# 각 링크별 결과 받아오기
+  @app.route("/api/vote", methods=["GET"])
+  def vote_result_get():
+    vote_result = list(db.vote_polls.find({}, {'_id': False}))
+    return jsonify({'results': vote_result})
