@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+          rel="stylesheet">
+    <style>
+        #result-box {
+            width: 50%;
+            margin: 10px auto 10px;
+            box-shadow: 0px 0px 2px gray;
+            border-radius: 10px;
+        }
+        .mypost {
+            width: 95%;
+            margin: 20px auto 20px auto;
+            box-shadow: 0px 0px 3px 0px black;
+            padding: 20px;
+        }
+
+        .list-group {
+            width: 100%;
+        }
+
+        .mybutton {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .badge {
+            float: right;
+        }
+    </style>
+    <script>
+
+        $(document).ready(function () {
+            vote_result(); // 페이지가 로드되면 바로 투표 결과가 나와야 하므로 로드됨과 동시에 함수 호출
+        });
+
+        function sort_selections_by_popularity(data) {
+            let selection_and_count = []
+            for (let [key, value] of Object.entries(data)) {
+                console.log(key, value)
+                if (key != 'title' && key != 'error') {
+                    selection_and_count.push([key, value])
+                }
+            }
+            selection_and_count.sort(
+                (first, second) => {
+                    return second[1] - first[1]
+                }
+            )
+            return selection_and_count
+        }
+
+        //투표 결과를 html에 띄워주는 함수
+        function vote_result() {
+            let total_votes = 0;
+            $.ajax({
+                type: "GET",
+                url: "/api/vote-result?id=" + String({{ id }}),
+                data: {},
+                success: function (response) {
+                    if (response['error'] === true) {
+                        alert(response['msg'])
+                        return
+                    }
+
+                    selections_by_popularity = sort_selections_by_popularity(response['data'])
+                    $('#title').text(response['data']['title'])
+                    for (let [selection, popularity] of selections_by_popularity) {
+                        if (selection != 'title' && selection != 'error')
+                            total_votes += parseInt(popularity);
+                    }
+
+                    for (let [selection, popularity] of selections_by_popularity) {
+                        let percent = total_votes >= 1 ? popularity / total_votes * 100 : 0
+                        percent = percent.toFixed(2)
+                        let temp_html = ""
+                        if (percent == 0) {
+                            temp_html = `
+                                            <li class="list-group-item">${selection}
+                                                <span class="badge bg-primary rounded-pill">${percent}% (${popularity})</span>
+                                            </li>
+                                            `
+                        } else {
+                            temp_html = `
+                                        <li class="list-group-item" style="background: linear-gradient(to right, lightgrey ${percent}%, white 0%);">${selection}
+                                            <span class="badge bg-primary rounded-pill">${percent}% (${popularity})</span>
+                                        </li>
+                                        `
+                        }
+                        $('#result-votes').append(temp_html)
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<header>{% include 'header.html' %}</header>
+<div class="mypost" id="result-box">
+    <h1 id="title"></h1>
+    <div class="card" style="">
+        <ul class="list-group list-group-flush" id="result-votes">
+        </ul>
+    </div>
+    <div class="mybutton">
+        <button onclick="location.href='/'" type="button" class="btn btn-outline-primary" >home</button>
+    </div>
+</div>
+
+</body>
+
+</html>

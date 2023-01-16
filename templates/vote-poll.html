@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+          rel="stylesheet">
+    <style>
+        .box {
+            width: 50%;
+            margin: auto;
+        }
+        .mygroup > * {
+            margin: 0px 0px 10px 0px;
+        }
+        .mygroup > .mytext {
+            font-size: 20px;
+            border: 1px black;
+        }
+        .mygroup2 > * {
+            margin: 0px 0px 10px 0px;
+        }
+        .mygroup2 > .mytext {
+            font-size: 20px;
+            border: 1px black;
+        }
+        .mybutton {
+            margin-left: 10px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        button {
+            margin-left: 10px;
+        }
+        .buttonclass{
+            display: flex;
+            align-items: end;
+            flex-direction: column;
+        }
+        .box {
+            width: 50%;
+            margin: 10px auto 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 2px gray;
+            border-radius: 10px;
+        }
+
+    </style>
+    <script>
+        function addResponse() {
+            let temp_html =
+                `<div class="input-group">
+                           <input type="text" class="form-control vote_input"  aria-label="Dollar amount (with dot and two decimal places)">
+                        </div>`
+            $('#myvote').append(temp_html)
+        }
+        function startPoll(){
+            let title = $('#title').val()
+            let resCount = $('.vote_input').length
+            let resData = new Array(resCount);
+
+            for(let i = 0; i < resCount; i++) {
+                resData[i] = $($('.vote_input')[i]).val()
+                if(resData[i] === "" || resData[i] == null){
+                    alert('리스트에 null값은 넣을 수 없습니다. 다시 입력해 주세요!')
+                    return;
+                }
+            }
+            let dupleCheck = new Set(resData);
+
+            if(title === "") {
+                alert('타이틀에 null값은 넣을 수 없습니다. 다시 입력해 주세요!')
+                return;
+            }
+            if (resData.length !== dupleCheck.size) {
+                alert('response값이 중복됩니다. 다시 입력해 주세요!')
+                return;
+            }
+
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/vote-poll',
+                    data: {title_give:title, resData_give:resData},
+                    success: function (response) {
+                        alert('투표 생성 완료!')
+
+                        {# 투표 생성 완료시, index.html 로 이동 #}
+                        window.location = '/'
+                        return false;
+                    }
+                });
+            }
+
+        }
+    </script>
+
+</head>
+<body>
+<header>{% include 'header.html' %}</header>
+<div class="box">
+    <div class="mygroup">
+        <h2>Create a new Poll</h2>
+        <div class="mygroup2" id="myvote">
+            <div class="mytext">Question</div>
+            <div class="input-group" class="myinput">
+                <input id="title" type="text" class="form-control"
+                       aria-label="Dollar amount (with dot and two decimal places)">
+            </div>
+            <div class="mytext">Responses (Minimum 2)
+                <button onclick="addResponse()" type="button" class="btn btn-outline-primary" style="float: right;">
+                Add
+                </button>
+            </div>
+            <div class="input-group" class="myinput">
+                <input id="res1" type="text" class="form-control vote_input" aria-label="Dollar amount (with dot and two decimal places)">
+            </div>
+            <div class="input-group">
+                <input id="res2" type="text" class="form-control vote_input" aria-label="Dollar amount (with dot and two decimal places)">
+            </div>
+        </div>
+        <div class="buttonclass">
+            <div class="mybutton">
+
+        </div>
+        <div class="mybutton">
+            <button type="button" onclick="location.href = '/'" class="btn btn-light">Back</button>
+            <button onclick="startPoll()" type="button" class="btn btn-primary">Start Poll</button>
+        </div>
+        </div>
+
+    </div>
+</div>
+</body>
+
+</html>

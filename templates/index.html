@@ -1,10 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            show_vote();
+        });
+
+        function show_vote() {
+            $('#vote-list').empty()
+            $.ajax({
+                type: "GET",
+                url: "/api/vote-results",
+                data: {},
+                success: function (response) {
+                    let rows = response
+                    for (let i = 0; i < rows.length; i++) {
+                        let title = rows[i]['title']
+                        let id = rows[i]['id']
+                        let temp_html = `
+                                            <li>
+                                                <h4>
+                                                    ${title}
+                                                </h4>
+                                                <div class="mybutton">
+                                                    <button onClick="location.href='vote?id=${id}'" type="button" class="btn btn-outline-primary">투표하기</button>
+                                                    <button onclick="location.href='vote-result?id=${id}'" type="button" class="btn btn-outline-success">결과보기</button>
+                                                </div>
+                                            </li>
+                        `
+                        $('#vote-list').append(temp_html)
+                    }
+                }
+        })
+        }
+
+    </script>
+    <style>
+        #vote-list {
+            width: 50%;
+            margin: 10px auto 10px;
+            box-shadow: 0px 0px 2px gray;
+            border-radius: 10px;
+
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .mybox{
+            width: 45%;
+            margin: 30px auto;
+        }
+        .mybutton{
+            display: block;
+            text-align: center;
+        }
+        li {
+            list-style: none;
+            margin: 15px;
+        }
+        h4{
+            text-align: center;
+        }
+
+    </style>
 </head>
 <body>
+<header>{% include 'header.html' %}</header>
+<div class="mybox" id="vote-list">
 
+</div>
 </body>
 </html>
