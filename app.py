@@ -74,3 +74,9 @@ if __name__ == '__main__':
   def vote_result_get():
     vote_result = list(db.vote_polls.find({}, {'_id': False}))
     return jsonify({'results': vote_result})
+
+  #메인페이지에 투표 제목, 투표 링크, 결과 링크 표시
+  @app.route("/api/vote", methods=["GET"])
+  def vote_main_get():
+    vote_list = list(db.vote_polls.find({}, {'_id': False}))
+    return jsonify({'votes': vote_list})
