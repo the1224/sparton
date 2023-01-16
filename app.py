@@ -72,17 +72,11 @@ def vote_put_api():
 @app.route('/api/vote-result', methods=["GET"])
 def get_vote_result():
   id_give = int(request.args.get('id'))
-  found_vote_result = db.vote_polls.find_one({'id': id_give}, {'_id': False})
+  found_vote_result = db.vote_polls.find_one({'id': id_give}, {'_id': False, 'id': False})
   if found_vote_result is None:
     return jsonify({'error': True, 'msg': '해당 id를 가진 투표장이 없습니다'})
-
-  doc = {}
-  doc['error'] = False
-  for key, value in found_vote_result.items():
-    if key != 'id' and key != 'msg':
-      doc[key] = value
-  return doc
-
+  else :
+    return jsonify({'error': False, 'data': found_vote_result})
 
 
 @app.route('/api/vote-results', methods=["GET"])
