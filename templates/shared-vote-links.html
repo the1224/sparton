@@ -64,6 +64,12 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
+
+        .mybutton {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -127,6 +133,9 @@
     <div>
         투표 결과 확인 : <a id="vote_result_link"></a>
     </div>
+</div>
+<div class="mybutton">
+    <button onclick="location.href='/'" type="button" class="btn btn-outline-primary" >home</button>
 </div>
 {#<h1>shared-vote-links page</h1>#}
 {#<div class="mypic">#}
