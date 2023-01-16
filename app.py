@@ -29,10 +29,10 @@ def shared_vote_links():
 def create_vote_poll():
   doc = {}
   for key, value in request.form.items():
-    if key != "title":
+    if key != "title_give":
       doc[value] = 0
     else:
-      doc[key] = 0
+      doc[key] = value
   new_id = len(list(db.vote_polls.find({}, {'_id': False})))
   doc['id'] = new_id
   db.vote_polls.insert_one(doc)
