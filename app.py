@@ -23,7 +23,7 @@ def vote_result():
 
 @app.route('/shared-vote-links')
 def shared_vote_links():
-  return render_template('shared-vote-links.html')
+  return render_template('shared-vote-links.html', id = request.args.get('id'))
 
 @app.route('/api/vote-poll', methods=["POST"])
 def create_vote_poll():
@@ -37,7 +37,7 @@ def create_vote_poll():
   doc['id'] = new_id
   db.vote_polls.insert_one(doc)
 
-  return jsonify({'error': False})
+  return jsonify({'error': False, 'id': new_id})
 
 # 투표 GET API
 @app.route('/api/vote', methods=["GET"])
