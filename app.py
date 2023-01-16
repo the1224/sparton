@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, redirect, url_for
 from vote import *
 
 app = Flask(__name__)
@@ -15,7 +15,12 @@ def vote_poll():
 
 @app.route('/vote')
 def vote():
-  return render_template('vote.html', id = request.args.get('id'))
+  vote_id = request.args.get('id');
+
+  if(duple_check(vote_id)):
+    return render_template('vote-result.html', id = vote_id)
+  else:
+    return render_template('vote.html', id = vote_id)
 
 #각 링크별 결과창 생성
 @app.route('/vote-result')
@@ -83,13 +88,6 @@ def get_vote_result():
 def get_all_vote_results():
   all_vote_results = list(db.vote_polls.find({}, {'_id': False}))
   return all_vote_results
-
-
-# 각 링크별 결과 받아오기
-@app.route("/api/vote", methods=["GET"])
-def vote_result_get():
-  vote_result = list(db.vote_polls.find({}, {'_id': False}))
-  return jsonify({'results': vote_result})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
