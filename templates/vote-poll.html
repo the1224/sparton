@@ -25,31 +25,24 @@
             font-family: 'Ubuntu', sans-serif;
 
         }
-
-
         .box {
             width: 50%;
             margin: auto;
         }
-
         .mygroup > * {
             margin: 0px 0px 10px 0px;
         }
-
         .mygroup > .mytext {
             font-size: 20px;
             border: 1px black;
         }
-
         .mygroup2 > * {
             margin: 0px 0px 10px 0px;
         }
-
         .mygroup2 > .mytext {
             font-size: 20px;
             border: 1px black;
         }
-
         .mybutton {
             float: right;
             margin-left: 10px;
@@ -59,7 +52,6 @@
             margin-left: 10px;
         }
 
-
     </style>
     <script>
         function addResponse() {
@@ -68,6 +60,20 @@
                            <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
                         </div>`
             $('#myvote').append(temp_html)
+        }
+        function startPoll(){
+            let title = $('#title').val()
+            let res1 = $('#res1').val()
+            let res2 = $('#res2').val()
+            $.ajax({
+                type: 'POST',
+                url: '/vote-poll',
+                data: {title_give:title, res1_give:res1, res2_give:res2},
+                success: function (response) {
+                    //alert(response['msg'])
+                    window.location.reload()
+                }
+            });
         }
     </script>
 
@@ -86,10 +92,10 @@
             </div>
             <div class="mytext">Responses (Minimum 2)</div>
             <div class="input-group" class="myinput">
-                <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                <input id="res1" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
             </div>
             <div class="input-group">
-                <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                <input id="res2" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
             </div>
         </div>
         <div class="mybutton">
@@ -99,7 +105,7 @@
         </div>
         <div class="mybutton">
             <button type="button" class="btn btn-light">Cancle</button>
-            <button type="button" class="btn btn-primary">Start Poll</button>
+            <button onclick="startPoll()" type="button" class="btn btn-primary">Start Poll</button>
         </div>
     </div>
 </div>
