@@ -62,31 +62,36 @@
         function addResponse() {
             let temp_html =
                 `<div class="input-group">
-                           <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                           <input type="text" class="form-control vote_input"  aria-label="Dollar amount (with dot and two decimal places)">
                         </div>`
             $('#myvote').append(temp_html)
         }
         function startPoll(){
             let title = $('#title').val()
-            let res1 = $('#res1').val()
-            let res2 = $('#res2').val()
+            let resCount = $('.vote_input').length
+            let resData = new Array(resCount)
+
+            for(let i = 0; i < resCount; i++) {
+                resData[i] = $($('.vote_input')[i]).val()
+            }
+
             if (res1==res2) {
                 alert('response값이 중복됩니다. 다시 입력해 주세요!')
             }
             else {
                 $.ajax({
-                type: 'POST',
-                url: '/api/vote-poll',
-                data: {title_give:title, res1_give:res1, res2_give:res2},
-                success: function (response) {
-                    alert('투표 생성 완료!')
+                    type: 'POST',
+                    url: '/api/vote-poll',
+                    data: {title_give:title, resData_give:resData},
+                    success: function (response) {
+                        alert('투표 생성 완료!')
 
-                    {# 투표 생성 완료시, 다른 사람들도 링크로 참여할 수 있는 공유 링크가 있는 페이지로 redirect#}
-                    {# GET parameter로 id 값을 넘겨줌 #}
-                    window.location = '/shared-vote-links?' + 'id' + '=' + response['id']
-                    return false;
-                }
-            });
+                        {# 투표 생성 완료시, 다른 사람들도 링크로 참여할 수 있는 공유 링크가 있는 페이지로 redirect#}
+                        {# GET parameter로 id 값을 넘겨줌 #}
+                        window.location = '/shared-vote-links?' + 'id' + '=' + response['id']
+                        return false;
+                    }
+                });
             }
 
         }
@@ -105,19 +110,21 @@
                 <input id="title" type="text" class="form-control"
                        aria-label="Dollar amount (with dot and two decimal places)">
             </div>
-            <div class="mytext">Responses (Minimum 2)</div>
+            <div class="mytext">Responses (Minimum 2)
+                <button onclick="addResponse()" type="button" class="btn btn-outline-primary" style="float: right;">
+                Add
+                </button>
+            </div>
             <div class="input-group" class="myinput">
-                <input id="res1" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                <input id="res1" type="text" class="form-control vote_input" aria-label="Dollar amount (with dot and two decimal places)">
             </div>
             <div class="input-group">
-                <input id="res2" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                <input id="res2" type="text" class="form-control vote_input" aria-label="Dollar amount (with dot and two decimal places)">
             </div>
         </div>
         <div class="buttonclass">
             <div class="mybutton">
-            <button onclick="addResponse()" type="button" class="btn btn-outline-primary" style="float: right;">
-                Add
-            </button>
+
         </div>
         <div class="mybutton">
             <button type="button" class="btn btn-light">Cancle</button>

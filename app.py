@@ -27,12 +27,19 @@ def shared_vote_links():
 
 @app.route('/api/vote-poll', methods=["POST"])
 def create_vote_poll():
+
+  resData = request.form.getlist('resData_give[]')
+
   doc = {}
   for key, value in request.form.items():
     if key == "title_give":
       doc['title'] = value
     else:
       doc[value] = 0
+
+  for res in resData:
+    doc[res] = 0
+
   new_id = len(list(db.vote_polls.find({}, {'_id': False})))
   doc['id'] = new_id
   db.vote_polls.insert_one(doc)
