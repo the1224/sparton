@@ -67,7 +67,7 @@
     </style>
     <script>
         $(document).ready(function () {
-            vote_link = 'http://localhost:5000/vote/' + String({{ id }})
+            vote_link = 'http://localhost:5000/vote?id=' + String({{ id }})
             vote_result_link = 'http://localhost:5000/vote-result?id=' + String({{ id }})
             $('#vote_link').text(vote_link)
             $('#vote_link').attr('href', vote_link)
