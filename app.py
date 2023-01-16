@@ -28,4 +28,4 @@ def category_put_api():
   return vote_put()
 
 if __name__ == '__main__':
-  app.run('0.0.0.0', port=5500, debug=True)
+  app.run('0.0.0.0', port=5000, debug=True)
